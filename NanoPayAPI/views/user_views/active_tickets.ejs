@@ -1,0 +1,102 @@
+<html>
+<head>
+</head>
+
+<body>
+<table id="tableid"></table>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" defer>
+	const user = <%-user%>;
+	const tickets = <%-tickets%>;
+	function generateTableHead(table, data) {
+	  let thead = table.createTHead();
+	  let row = thead.insertRow();
+	  for (let key of data) {
+	    let th = document.createElement("th");
+	    let text = document.createTextNode(key);
+	    th.appendChild(text);
+	    row.appendChild(th);
+	  }
+	}
+	function generateTable(table, data) {
+	  for (let element of data) {
+	  	console.log(element);
+	    let row = table.insertRow();
+	    for (key in element) {
+	      let cell = row.insertCell();
+	      let text = document.createTextNode(element[key]);
+	      cell.appendChild(text);
+	    }
+	    let acell = row.insertCell();
+	    let abutton  = document.createElement("button");
+	    abutton.addEventListener("click",()=>{consent(element["_id"],row)});
+	    abutton.innerHTML = "Consent";
+	    acell.appendChild(abutton);
+			let bcell = row.insertCell();
+	    let bbutton  = document.createElement("button");
+	    bbutton.addEventListener("click",()=>{refuse(element["_id"],row)});
+	    bbutton.innerHTML = "Refuse";
+	    bcell.appendChild(bbutton);
+	  }
+	}
+	let table = document.getElementById("tableid"); 
+	console.log(table);
+	try{
+	let data = Object.keys(tickets[0]);
+	generateTableHead(table, data);
+	generateTable(table, tickets);
+}
+catch(err){
+	console.log("No tickets to claim");
+}
+
+function consent(ticket_id,row) {
+	console.log(ticket_id);
+	$.ajax ({
+    url: "http://localhost:3000/GIVE_CONSENT",
+    xhrFields: {
+      withCredentials:true
+    },
+    type: "POST",
+    data: JSON.stringify({"id":ticket_id}),
+    dataType: "json",
+    contentType: "application/json; charset=utf-8"
+  }).done((result) => {
+  	row.replaceChildren();
+  	row.remove();
+})
+}
+
+function refuse(ticket_id,row){
+	$.ajax ({
+    url: "http://localhost:3000/REFUSE_CONSENT",
+    xhrFields: {
+      withCredentials:true
+    },
+    type: "POST",
+    data: JSON.stringify({"id":ticket_id}),
+    dataType: "json",
+    contentType: "application/json; charset=utf-8"
+  }).done((result) => {
+  	row.replaceChildren();
+  	row.remove();
+})
+}
+
+
+
+</script>
+
+<h1>Active Tickets</h1>
+<p> Welcome <%= user.name %></p>
+<br>
+<p> Credit : <%= user.credit%></p>
+
+
+
+
+
+<a href="/user/logout">Logout</a>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+partner_dashboard:
+	display services with apikeys, and service code.
+
+
+APIKeys -- sort of
+
+make the interfaces look pretty
+
+remove unnecasary json encoding
+
+error handleing for CRUD on dbs, particularly for user and partner credit
+implement some custom error handleing, so partner and user can find out what went wrong.
+
+possible future:
+a way for partners to pay users
+why have users and partners as different enitiies? law and for serverside/clientside scripting// users use session storage, servers use api keys
+
+
+Buisness and law:
+	must make sure. Is there any regulation I must abide by. The regulation which exists may prevent the buisness from being viable.
+
+Taler Systems

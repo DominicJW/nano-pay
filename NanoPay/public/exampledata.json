@@ -1,0 +1,22 @@
+NanoPay({
+	"service":buybricks",
+	"units":5,
+	"args":{"type":"red","size":10},
+	"usrname" : NanoPay.Username,
+	"website":"test.com",
+	"AUTHURL":"test.com/auth"
+	},
+	(result)=> console.log(result.body),refresh)
+
+{timeout to claim}
+
+ticketDB
+	
+	{token:"8s9dhw3jdw2",
+	"service":buybricks",
+	"units":5,
+	"args":{"type":"red","size":10},
+	"usrname" : NanoPay.Username,
+	"website":"test.com",
+	"AUTHURL":"test.com/auth"
+	}
